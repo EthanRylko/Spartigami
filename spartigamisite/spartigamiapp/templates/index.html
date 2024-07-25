@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+{% load customtags %}
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <h1> Spartigami </h1>
+    <table id="scoretable">
+        <thead>
+            <tr id="header">
+                <th> X </th>
+                {% for i in head_range %}
+                    <th> {{i}} </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in row_range %}
+                <tr>
+                    <th>
+                        {{i}}
+                    </th>
+                    {% for j in head_range %}
+                        {% if j < i %}
+                            <td style="background-color: black"> </td>
+                        {% else %}
+                            {% with j|find_score_pair_index:i as idx %}
+                                {% if data|index:idx == 0 %}
+                                    <td style="background-color: {{bgcolor|index:idx}};"> </td>
+                                {% else %}
+                                    <td class="clickable" cell-id="{{idx}}" style="background-color: {{bgcolor|index:idx}};"> {{data|index:idx}} </td>
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="infobox" class="info-box">
+        <span id="infobox_close" class="close">&times;</span>
+        <p id="infobox_content"></p>
+    </div>
+
+    <script src="{% static 'index.js' %}"></script>
+</body>
+</html>
