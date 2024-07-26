@@ -27,6 +27,8 @@ def compile_data():
     record_color = list()
     season_stats = list()
     season_color = list()
+    latest_stats = list()
+    latest_color = list()
 
     for c in range(COLS + 1):
         for r in range(c + 1):
@@ -45,19 +47,27 @@ def compile_data():
                 season_stats.append(game.season)
                 season_color.append(calc_season_color(int(game.season)))
 
+                game = games.get(date = entry.last_game)
+                latest_stats.append(game.season)
+                latest_color.append(calc_season_color(int(game.season)))
+
             except:
                 count_stats.append(0)
                 record_stats.append(0)
                 season_stats.append(0)
+                latest_stats.append(0)
                 index = r + c * (c + 1) // 2
                 if index not in EXCLUDE_LIST:
                     count_color.append('rgb(255, 255, 255)')
                     record_color.append('rgb(255, 255, 255)')
                     season_color.append('rgb(255, 255, 255)')
+                    latest_color.append('rgb(255, 255, 255)')
+
                 else:
                     count_color.append('rgb(0, 0, 0)')
                     record_color.append('rgb(0, 0, 0)')
                     season_color.append('rgb(0, 0, 0)')
+                    latest_color.append('rgb(0, 0, 0)')
     
     table_data['count_stats'] = count_stats
     table_data['count_color'] = count_color
@@ -65,6 +75,8 @@ def compile_data():
     table_data['record_color'] = record_color
     table_data['season_stats'] = season_stats
     table_data['season_color'] = season_color
+    table_data['latest_stats'] = latest_stats
+    table_data['latest_color'] = latest_color
     
 
 def calc_count_color(games, max_games):
@@ -125,7 +137,7 @@ def get_cell_data(request, cell_id):
     except ScorePair.DoesNotExist:
         return JsonResponse({'error': 'Data not found'}, status=404)
     
-    
+
 def refresh_table(request, mode):
     try:
         data = dict()
@@ -140,9 +152,13 @@ def refresh_table(request, mode):
             stats = table_data['record_stats']
             color = table_data['record_color']
             
-        else: # mode == 'season'
+        elif mode == 'first':
             stats = table_data['season_stats']
             color = table_data['season_color']
+        
+        else: # mode == 'latest'
+            stats = table_data['latest_stats']
+            color = table_data['latest_color']
 
         data['stats'] = stats
         data['color'] = color
