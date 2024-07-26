@@ -4,14 +4,17 @@ from .models import ScorePair, Game
 
 ROWS = 50
 COLS = 104
-table_data = dict()
 EXCLUDE_LIST = [1, 2, 4, 7, 11, 16, 29]
+
+table_data = dict()
+
 
 def index(request):
     compile_data()
 
     return render(request, 'index.html', {'head_range' : range(COLS), 'row_range' : range(ROWS),
                                           'exclude_list' : EXCLUDE_LIST, 'data' : table_data['count_stats']})
+
 
 def compile_data():
     score_pairs = ScorePair.objects.all()
@@ -88,6 +91,7 @@ def calc_season_color(season):
 
     return f'rgb({r}, {g}, {r})'
 
+
 def get_cell_data(request, cell_id):
     try:
         entry = ScorePair.objects.get(index=cell_id)
@@ -120,6 +124,7 @@ def get_cell_data(request, cell_id):
         return JsonResponse(data)
     except ScorePair.DoesNotExist:
         return JsonResponse({'error': 'Data not found'}, status=404)
+    
     
 def refresh_table(request, mode):
     try:

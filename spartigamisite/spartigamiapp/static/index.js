@@ -69,12 +69,12 @@ function grab_score_pair(cell_id, callback) {
             let first_day_str = `${first_day}. ${date_to_str(first_game)}`
             let last_day_str = `${last_day}. ${date_to_str(last_game)}`
 
-            info_text = `<p> <b> ${high}-${low}: </b> Score happened ${games} time`;
+            info_text = `<b> ${high}-${low}: </b> Score happened ${games} time`;
             info_text += (games > 1) ? "s" : "";
-            info_text += ` (${record}) </p>`;
-            info_text += `<p> First game: ${first_day_str}: ${first_msu_rank} ${first_win} ${first_home} ${first_opp_rank} ${first_opponent} </p>`;
+            info_text += ` (${record})`;
+            info_text += `<br> First game: ${first_day_str}: ${first_msu_rank} ${first_win} ${first_home} ${first_opp_rank} ${first_opponent}`;
             if (games != 1) {
-                info_text += `<p> Last game: ${last_day_str}: ${last_msu_rank} ${last_win} ${last_home} ${last_opp_rank} ${last_opponent} </p>`;
+                info_text += `<br> Last game: ${last_day_str}: ${last_msu_rank} ${last_win} ${last_home} ${last_opp_rank} ${last_opponent}`;
             }
 
             callback(info_text);
@@ -85,14 +85,12 @@ function grab_score_pair(cell_id, callback) {
 }
 
 function refresh_table(callback) {
-    console.log("Attempted table refresh.")
     fetch(`/api/table-data/${mode}/`)
     .then(response => response.json())
     .then(data => {
         if (data.error) {
             alert(data.error);
         } else {
-            console.log(data);
             let stats = data.stats;
             let color = data.color;
 
@@ -143,28 +141,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     showStatCheck.addEventListener("click", function(event) {
-        show_stat = showStatCheck.checked
-        if (show_stat) {
-            console.log("Selected \"Show stat\"");
-        } else {
-            console.log("Deselected \"Show stat\"");
-        }
+        console.log("clicked stat");
+        show_stat = !show_stat;
         refresh_table(table_callback);
     });
 
     showGradCheck.addEventListener("click", function(event) {
+        console.log("clicked grad");
         show_grad = showGradCheck.checked;
-        if (show_grad) {
-            console.log("Selected \"Show gradient\"");
-        } else {
-            console.log("Deselected \"Show gradient\"");
-        }
         refresh_table(table_callback);
     });
 
     dropdown.addEventListener("change", function() {
         mode = dropdown.value;
-        console.log(mode);
         refresh_table(table_callback);
     });
 });

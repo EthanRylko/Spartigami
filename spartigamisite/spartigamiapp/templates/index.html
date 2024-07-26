@@ -9,24 +9,28 @@
 </head>
 
 <body>
-    <h1> Spartigami </h1>
+    <div class="section-header">
+        <h1> Spartigami </h1>
+    </div>
 
     <div id="options" class="options">
-        <div id="show-stat">
-            <input name="show-stat" id="show-stat-input" type="checkbox">
-            <label for="show-stat"> Show stat </label>
-        </div>
-        <div id="show-grad">
-            <input name="show-grad" id="show-grad-input" type="checkbox">
-            <label for="show-grad"> Show gradient </label>
-        </div>
-        <div id="menu">
-            <select name="mode" id="mode">
-                <option value="count"> Count </option>
-                <option value="record"> Record </option>
-                <option value="first"> First season </option>
-            </select>
-        </div>
+        <label for="show-stat-input">
+            <input type="checkbox" id="show-stat-input">
+            <span class="checkmark"></span>
+            Show stat
+        </label>
+
+        <label for="show-grad-input">
+            <input type="checkbox" id="show-grad-input">
+            <span class="checkmark"></span>
+            Show gradient
+        </label>
+
+        <select name="mode" id="mode">
+            <option value="count"> Count </option>
+            <option value="record"> Record </option>
+            <option value="first"> First season </option>
+        </select>
     </div>
 
     <div class="table-container">
@@ -66,9 +70,29 @@
         </table>
     </div>
 
+    <div class="section-header">
+        <h1> FAQ </h1>
+    </div>
+
+    <div class="faq">
+        <h2>
+            What is Spartigami?
+        </h2>
+        <p>
+            Scorigami, for the Michigan State Spartans football team.
+        </p>
+        <h2>
+            What is Scorigami?
+        </h2>
+        <p>
+            Scorigami is a concept thought up by Jon Bois. It is the art of building final scores that have never happened before
+            in NFL history.
+        </p>
+    </div>
+
     <div id="infobox" class="info-box">
         <span id="infobox-close" class="close">&times;</span>
-        <p id="infobox-content"></p>
+        <div class="infobox-content" id="infobox-content"></p>
     </div>
 
     <script src="{% static 'index.js' %}"></script>
