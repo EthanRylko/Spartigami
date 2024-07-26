@@ -121,12 +121,24 @@ def get_cell_data(request, cell_id):
     except ScorePair.DoesNotExist:
         return JsonResponse({'error': 'Data not found'}, status=404)
     
-def get_game_data(request, date):
+def refresh_table(request, mode):
     try:
-        entry = Game.objects.get(date=date)
-        data = {
-            'opponent': entry.opponent,
-        }
+        score_pairs = ScorePair.objects.all()
+        data = dict()
+        stats = list()
+        color = list()
+
+        if mode == 'count':
+
+            pass
+        elif mode == 'record':
+
+            pass
+        else: # mode == 'season'
+
+            pass
+            
+
         return JsonResponse(data)
     except ScorePair.DoesNotExist:
-        return JsonResponse({'error': 'Data not found'}, status=404)
+        return JsonResponse({'error': 'Data not found'}, status=404) 

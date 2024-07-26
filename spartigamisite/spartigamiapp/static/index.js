@@ -1,5 +1,5 @@
 function display_callback(text) {
-    document.getElementById("infobox_content").innerHTML = text;
+    document.getElementById("infobox-content").innerHTML = text;
 }
 
 function date_to_str(date) {
@@ -67,13 +67,27 @@ function grab_score_pair(cell_id, callback) {
     
 }
 
+function refresh_table() {
+    
+}
+
+var mode = "count";
+var show_stat = false;
+var show_grad = false;
+var default_color = "#008000";
+
 document.addEventListener("DOMContentLoaded", function() {
     var cells = document.querySelectorAll(".clickable");
-    var infoBox = document.getElementById("infobox");
-    var infoBoxContent = document.getElementById("infobox_content");
-    var infoBoxClose = document.getElementById("infobox_close");
+    const infoBox = document.getElementById("infobox");
+    const infoBoxContent = document.getElementById("infobox-content");
+    const infoBoxClose = document.getElementById("infobox-close");
+    const showStatCheck = document.getElementById("show-stat-input");
+    const showGradCheck = document.getElementById("show-grad-input");
+    const dropdown = document.getElementById("mode");
 
     cells.forEach(function(cell) {
+        cell.style.backgroundColor = default_color;
+        cell.innerText = "";
         cell.addEventListener("click", function() {
             infoBox.style.display = 'block';
             infoBoxContent.innerHTML = "<br> <br> ...";
@@ -94,5 +108,28 @@ document.addEventListener("DOMContentLoaded", function() {
         if (event.target == infoBox) {
             infoBox.style.display = "none";
         }
+    });
+
+    showStatCheck.addEventListener("click", function(event) {
+        show_stat = showStatCheck.checked
+        if (show_stat) {
+            console.log("Selected \"Show stat\"");
+        } else {
+            console.log("Deselected \"Show stat\"");
+        }
+    });
+
+    showGradCheck.addEventListener("click", function(event) {
+        show_grad = showGradCheck.checked;
+        if (show_grad) {
+            console.log("Selected \"Show gradient\"");
+        } else {
+            console.log("Deselected \"Show gradient\"");
+        }
+    });
+
+    dropdown.addEventListener("change", function() {
+        mode = dropdown.value;
+        console.log(mode);
     });
 });

@@ -12,9 +12,13 @@
     <h1> Spartigami </h1>
 
     <div id="options" class="options">
-        <div id="show-count">
-            <input name="show-count" id="show-count" type="checkbox">
-            <label for="show-count"> Show count </label>
+        <div id="show-stat">
+            <input name="show-stat" id="show-stat-input" type="checkbox">
+            <label for="show-stat"> Show stat </label>
+        </div>
+        <div id="show-grad">
+            <input name="show-grad" id="show-grad-input" type="checkbox">
+            <label for="show-grad"> Show gradient </label>
         </div>
         <div id="menu">
             <select name="mode" id="mode">
@@ -47,9 +51,9 @@
                             {% else %}
                                 {% with j|find_score_pair_index:i as idx %}
                                     {% if data|index:idx == 0 %}
-                                        <td style="background-color: {{bgcolor|index:idx}};"> </td>
+                                        <td> </td>
                                     {% else %}
-                                        <td class="clickable" cell-id="{{idx}}" style="background-color: {{bgcolor|index:idx}};"> {{data|index:idx}} </td>
+                                        <td class="clickable" cell-id="{{idx}}"> </td>
                                     {% endif %}
                                 {% endwith %}
                             {% endif %}
@@ -61,8 +65,8 @@
     </div>
 
     <div id="infobox" class="info-box">
-        <span id="infobox_close" class="close">&times;</span>
-        <p id="infobox_content"></p>
+        <span id="infobox-close" class="close">&times;</span>
+        <p id="infobox-content"></p>
     </div>
 
     <script src="{% static 'index.js' %}"></script>
