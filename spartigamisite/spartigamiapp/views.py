@@ -8,6 +8,7 @@ COLS = 104
 def index(request):
     score_pairs = ScorePair.objects.all()
     games_count_mode = False
+    season_mode = True
     data = list()
     bgcolor = list()
     exclude_list = [1, 2, 4, 7, 11, 16, 29]
@@ -22,7 +23,7 @@ def index(request):
                     data.append(entry.games)
 
                     scalar = (max_games - entry.games) / max_games
-                    scalar = scalar ** 2
+                    scalar = scalar ** 3
                     r = 0 + 192 * scalar
                     g = 128 + 96 * scalar
 
@@ -34,6 +35,31 @@ def index(request):
                         bgcolor.append('rgb(255, 255, 255)')
                     else:
                         bgcolor.append('rgb(0, 0, 0)')
+
+    elif season_mode:
+        games = Game.objects.all()
+
+        for c in range(COLS + 1):
+            for r in range(c + 1):
+                try:
+                    entry = score_pairs.get(high = c, low = r)
+                    game = games.get(date = entry.first_game)
+                    data.append(game.season)
+
+                    scalar = (2023 - int(game.season)) / 105
+                    scalar = scalar ** (1 / 3)
+                    r = 0 + 192 * scalar
+                    g = 128 + 96 * scalar
+
+                    bgcolor.append(f'rgb({r}, {g}, {r})')
+                except:
+                    data.append(0)
+                    index = r + c * (c + 1) // 2
+                    if index not in exclude_list:
+                        bgcolor.append('rgb(255, 255, 255)')
+                    else:
+                        bgcolor.append('rgb(0, 0, 0)')
+
     else:
         # record mode for now
         for c in range(COLS + 1):
