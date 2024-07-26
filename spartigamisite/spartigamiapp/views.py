@@ -34,6 +34,28 @@ def index(request):
                         bgcolor.append('rgb(255, 255, 255)')
                     else:
                         bgcolor.append('rgb(0, 0, 0)')
+    else:
+        # record mode for now
+        for c in range(COLS + 1):
+            for r in range(c + 1):
+                try:
+                    entry = score_pairs.get(high = c, low = r)
+
+                    w, l, t = entry.record.split('-')
+                    pct = (int(w) + 0.5 * float(t)) / (int(w) + int(l) + int(t))
+                    data.append('%0.3f' % pct)
+
+                    r = min(256 * (1 - pct), 128)
+                    g = min(256 * pct, 128)
+
+                    bgcolor.append(f'rgb({r}, {g}, 0)')
+                except:
+                    data.append(0)
+                    index = r + c * (c + 1) // 2
+                    if index not in exclude_list:
+                        bgcolor.append('rgb(255, 255, 255)')
+                    else:
+                        bgcolor.append('rgb(0, 0, 0)')
                     
 
     return render(request, 'index.html', {'head_range' : range(COLS), 'row_range' : range(ROWS),
