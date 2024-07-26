@@ -3,11 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from .models import ScorePair, Game
 
 ROWS = 50
-COLS = 61
+COLS = 104
 
 def index(request):
     score_pairs = ScorePair.objects.all()
-    games_count_mode = True
+    games_count_mode = False
     data = list()
     bgcolor = list()
     exclude_list = [1, 2, 4, 7, 11, 16, 29]
@@ -78,6 +78,8 @@ def get_cell_data(request, cell_id):
             'first_home': first_game.home,
             'first_win': first_game.win,
             'first_day': first_game.day,
+            'first_msu_rank': first_game.msu_rank,
+            'first_opp_rank': first_game.opp_rank,
         }
 
         if entry.first_game != entry.last_game:
@@ -86,6 +88,8 @@ def get_cell_data(request, cell_id):
             data['last_home'] = last_game.home
             data['last_win'] = last_game.win
             data['last_day'] = last_game.day
+            data['last_msu_rank'] = last_game.msu_rank
+            data['last_opp_rank'] = last_game.opp_rank
         
         return JsonResponse(data)
     except ScorePair.DoesNotExist:

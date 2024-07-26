@@ -28,6 +28,9 @@ function grab_score_pair(cell_id, callback) {
             let record = data.record;
             let first_opponent = data.first_opponent;
             let last_opponent = data.last_opponent;
+            let first_day = data.first_day
+            let last_day = data.last_day
+
             let first_home = data.first_home == "H" ? "at home vs." : "away at";
             if (data.first_win === 'N') first_win = "at a neutral site vs.";
             let last_home = data.last_home == "H" ? "at home vs." : "away at";
@@ -36,8 +39,15 @@ function grab_score_pair(cell_id, callback) {
             if (data.first_win === 'T') first_win = "Tie";
             let last_win = data.last_win == "W" ? "Win" : "Loss";
             if (data.last_win === 'T') last_win = "Tie";
-            let first_day = data.first_day
-            let last_day = data.last_day
+
+            let first_msu_rank = data.first_msu_rank;
+            let first_opp_rank = data.first_opp_rank;
+            let last_msu_rank = data.last_msu_rank;
+            let last_opp_rank = data.last_opp_rank;
+            first_msu_rank = (first_msu_rank == 0) ? "" : `(${first_msu_rank})`;
+            first_opp_rank = (first_opp_rank == 0) ? "" : `(${first_opp_rank})`;
+            last_msu_rank = (last_msu_rank == 0) ? "" : `(${last_msu_rank})`;
+            last_opp_rank = (last_opp_rank == 0) ? "" : `(${last_opp_rank})`;
 
             let first_day_str = `${first_day}. ${date_to_str(first_game)}`
             let last_day_str = `${last_day}. ${date_to_str(last_game)}`
@@ -45,9 +55,9 @@ function grab_score_pair(cell_id, callback) {
             info_text = `<p> <b> ${high}-${low}: </b> Score happened ${games} time`;
             info_text += (games > 1) ? "s" : "";
             info_text += ` (${record}) </p>`;
-            info_text += `<p> First game: ${first_day_str}: ${first_win} ${first_home} ${first_opponent} </p>`;
+            info_text += `<p> First game: ${first_day_str}: ${first_msu_rank} ${first_win} ${first_home} ${first_opp_rank} ${first_opponent} </p>`;
             if (games != 1) {
-                info_text += `<p> Last game: ${last_day_str}: ${last_win} ${last_home} ${last_opponent} </p>`;
+                info_text += `<p> Last game: ${last_day_str}: ${last_msu_rank} ${last_win} ${last_home} ${last_opp_rank} ${last_opponent} </p>`;
             }
 
             callback(info_text);
