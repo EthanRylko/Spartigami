@@ -50,10 +50,12 @@
                                 <td style="background-color: black"> </td>
                             {% else %}
                                 {% with j|find_score_pair_index:i as idx %}
-                                    {% if data|index:idx == 0 %}
-                                        <td> </td>
-                                    {% else %}
+                                    {% if idx|ifinlist:exclude_list %}
+                                        <td style="background-color: black;"> </td>
+                                    {% elif data|index:idx != 0 %}
                                         <td class="clickable" cell-id="{{idx}}"> </td>
+                                    {% else %}
+                                        <td> </td>
                                     {% endif %}
                                 {% endwith %}
                             {% endif %}

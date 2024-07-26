@@ -12,3 +12,7 @@ def index(data, idx):
         return data[idx]
     except IndexError:
         return None
+
+@register.filter
+def ifinlist(val, data):
+    return val in data

@@ -2,6 +2,23 @@ function display_callback(text) {
     document.getElementById("infobox-content").innerHTML = text;
 }
 
+function table_callback(stats, color) {
+    var cells = document.querySelectorAll(".clickable");
+    cells.forEach(function(cell) {
+        if (!show_grad) {
+            cell.style.backgroundColor = default_color;
+        } else {
+            cell.style.backgroundColor = color[cell.getAttribute('cell-id')]
+        }
+
+        if (!show_stat) {
+            cell.innerText = "";
+        } else {
+            cell.innerText = stats[cell.getAttribute('cell-id')]
+        }
+    });
+}
+
 function date_to_str(date) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let split_result = date.split("-");
@@ -67,8 +84,22 @@ function grab_score_pair(cell_id, callback) {
     
 }
 
-function refresh_table() {
-    
+function refresh_table(callback) {
+    console.log("Attempted table refresh.")
+    fetch(`/api/table-data/${mode}/`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            console.log(data);
+            let stats = data.stats;
+            let color = data.color;
+
+            callback(stats, color);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 var mode = "count";
@@ -84,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const showStatCheck = document.getElementById("show-stat-input");
     const showGradCheck = document.getElementById("show-grad-input");
     const dropdown = document.getElementById("mode");
+    refresh_table(table_callback);
 
     cells.forEach(function(cell) {
         cell.style.backgroundColor = default_color;
@@ -117,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             console.log("Deselected \"Show stat\"");
         }
+        refresh_table(table_callback);
     });
 
     showGradCheck.addEventListener("click", function(event) {
@@ -126,10 +159,12 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             console.log("Deselected \"Show gradient\"");
         }
+        refresh_table(table_callback);
     });
 
     dropdown.addEventListener("change", function() {
         mode = dropdown.value;
         console.log(mode);
+        refresh_table(table_callback);
     });
 });
