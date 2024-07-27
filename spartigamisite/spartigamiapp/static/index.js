@@ -1,5 +1,6 @@
 function display_callback(text) {
     document.getElementById("infobox-content").innerHTML = text;
+    document.getElementById("infobox").style.display = 'block';
 }
 
 function table_callback(stats, color) {
@@ -49,13 +50,13 @@ function grab_score_pair(cell_id, callback) {
             let last_day = data.last_day
 
             let first_home = data.first_home == "H" ? "at home vs." : "away at";
-            if (data.first_win === 'N') first_win = "at a neutral site vs.";
+            if (data.first_home == "N") first_home = "at a neutral site vs.";
             let last_home = data.last_home == "H" ? "at home vs." : "away at";
-            if (data.last_home === 'N') last_home = "at a neutral site vs.";
+            if (data.last_home === "N") last_home = "at a neutral site vs.";
             let first_win = data.first_win == "W" ? "Win" : "Loss";
-            if (data.first_win === 'T') first_win = "Tie";
+            if (data.first_win == "T") first_win = "Tie";
             let last_win = data.last_win == "W" ? "Win" : "Loss";
-            if (data.last_win === 'T') last_win = "Tie";
+            if (data.last_win == "T") last_win = "Tie";
 
             let first_msu_rank = data.first_msu_rank;
             let first_opp_rank = data.first_opp_rank;
@@ -153,8 +154,6 @@ document.addEventListener("DOMContentLoaded", function() {
         cell.style.backgroundColor = default_color;
         cell.innerText = "";
         cell.addEventListener("click", function() {
-            infoBox.style.display = 'block';
-            infoBoxContent.innerHTML = "<br> <br> ...";
             let rect = cell.getBoundingClientRect();
             infoBox.style.top = (window.scrollY + rect.top + cell.offsetHeight) + "px";
             infoBox.style.left = (window.scrollX + rect.left) + "px";

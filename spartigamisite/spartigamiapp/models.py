@@ -28,3 +28,14 @@ class ScorePair (models.Model):
 
     def __str__(self):
         return f'{self.high}-{self.low}'
+    
+class TableData (models.Model):
+    index = models.IntegerField()
+    games = models.IntegerField()
+    games_color = models.CharField(max_length=20)
+    record = models.FloatField()
+    record_color = models.CharField(max_length=20)
+    first = models.IntegerField()
+    first_color = models.CharField(max_length=20)
+    latest = models.IntegerField()
+    latest_color = models.CharField(max_length=20)
