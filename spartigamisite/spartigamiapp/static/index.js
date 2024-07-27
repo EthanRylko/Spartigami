@@ -100,6 +100,40 @@ function refresh_table(callback) {
     .catch(error => console.error('Error:', error));
 }
 
+function highlight(cell, on) {
+    color = cell.style.backgroundColor;
+    if (color == "white" || color == "silver") {
+        cell.style.backgroundColor = on ? "silver" : "white";
+        return;
+    }
+
+    console.log(color);
+    if (color == "gray" || color == "gold") {
+        cell.style.backgroundColor = on ? "gold": "gray";
+    }
+}
+
+function highlight_row_col(cursor_cell, on) {
+    const row = cursor_cell.parentNode;
+    const cells = row.querySelectorAll("td, th");
+    const col_index = Array.from(cursor_cell.parentNode.children).indexOf(cursor_cell);
+
+    cells.forEach(cell => {
+        highlight(cell, on);
+    });
+
+    const rows = row.parentNode.querySelectorAll("tr");
+    const top_row = document.getElementById("header");
+    highlight(top_row.querySelectorAll("th")[col_index], on);
+    rows.forEach(r => {
+        const cell = r.children[col_index];
+        if (cell) {
+            highlight(cell, on);
+        }
+    });
+
+}
+
 var mode = "count";
 var show_stat = false;
 var show_grad = false;
@@ -156,4 +190,19 @@ document.addEventListener("DOMContentLoaded", function() {
         mode = dropdown.value;
         refresh_table(table_callback);
     });
+
+    const table = document.getElementById('scoretable');
+    const rows = table.querySelectorAll('tr');
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+            cell.addEventListener("mouseover", function () {
+                highlight_row_col(cell, true);
+            });
+            cell.addEventListener("mouseout", function () {
+                highlight_row_col(cell, false);
+            });
+        });
+    });
+
 });

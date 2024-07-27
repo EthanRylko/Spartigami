@@ -2,17 +2,13 @@ table {
     border-collapse: collapse;
     align-self: center;
     margin: auto;
-}
-
-table{
-    border: 1px solid black;
     table-layout: fixed;
     width: calc(30px * 61);
     user-select: none;
 }
 
 th, td {
-    border: 1px solid black;
+    margin: 0;
     text-align: center;
     width: 30px;
     font-size: 10px;
@@ -20,7 +16,7 @@ th, td {
 }
 
 th {
-    background-color: rgb(166, 166, 166);
+    font-weight: 800;
 }
 
 h1 {
@@ -47,6 +43,7 @@ label {
     color: white;
     user-select: none;
     position: relative;
+    width: 170px;
 }
 
 p {
@@ -57,6 +54,7 @@ select {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 18px;
     border-radius: 10px;
+    width: 170px;
 }
 
 input {
@@ -74,7 +72,13 @@ input:checked {
 }
 
 input:hover {
-    background-color: #ccc;
+    background-color: #ddd;
+}
+
+th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
 }
 
 div.section-header {
@@ -95,6 +99,7 @@ div.table-container {
     overflow-x: auto;
     border: 1px solid #ccc;
     margin: 0 auto;
+    border: 1px solid black;
 }
 
 div.faq {
@@ -134,19 +139,10 @@ div.infobox-content {
     font-size: 20px;
 }
 
-
-
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
-}
-  
-input:checked ~ .checkmark:after {
-    display: block;
-}
-  
-.checkmark:after {
     left: 15px;
     top: 10px;
     width: 5px;
@@ -154,4 +150,8 @@ input:checked ~ .checkmark:after {
     border: solid green;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
+}
+  
+input:checked ~ .checkmark:after {
+    display: block;
 }

@@ -10,7 +10,7 @@
 
 <body>
     <div class="section-header">
-        <h1> Spartigami </h1>
+        <h1> SPARTIGAMI </h1>
     </div>
 
     <div id="options" class="options">
@@ -38,16 +38,16 @@
         <table id="scoretable">
             <thead>
                 <tr id="header">
-                    <th> X </th>
+                    <th style="background-color: gray"> X </th>
                     {% for i in head_range %}
-                        <th> {{i}} </th>
+                        <th style="background-color: gray"> {{i}} </th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 {% for i in row_range %}
                     <tr>
-                        <th>
+                        <th style="background-color: gray">
                             {{i}}
                         </th>
                         {% for j in head_range %}
@@ -60,7 +60,7 @@
                                     {% elif data|index:idx != 0 %}
                                         <td class="clickable" cell-id="{{idx}}"> </td>
                                     {% else %}
-                                        <td> </td>
+                                        <td style="background-color: white"> </td>
                                     {% endif %}
                                 {% endwith %}
                             {% endif %}
